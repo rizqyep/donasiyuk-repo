@@ -25,6 +25,7 @@
 </head>
 
 <body>
+    @include('sweetalert::alert')
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark primary-bg-color shadow-none">
             <div class="container">
@@ -62,8 +63,20 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                @if(Auth::user() && Auth::user()->type == 'orphanage')
+                                @if( Auth::user()->profile->photo)
+                                <img src="{{asset( Auth::user()->profile->photo() )}}" width="28" height="28"
+                                    class="rounded-circle mr-2" alt="Profile Image">
 
+                                @else
+                                <h1 style="font-size : 10px" id="userIcon">
+                                    <i class="fas fa-user"></i>
+                                </h1>
+                                <p class="text-center">
+                                    <img src="" alt="Profile Preview" class="profile-image d-none rounded-circle">
+                                </p>
+
+                                @endif
+                                @if(Auth::user() && Auth::user()->type == 'orphanage')
                                 {{ Auth::user()->orphanage->name }}
                                 @else
                                 {{ Auth::user()->name }}
@@ -165,6 +178,7 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js">
     </script>
+    @stack('scripts')
 </body>
 
 </html>

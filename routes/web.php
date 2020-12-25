@@ -41,3 +41,7 @@ Route::post('/transaction','Orphanage\TransactionController@create');
 Route::get('/payment/instruction/{payment_token}/{payment_slug}/{orphanage_slug}/{transaction}','PaymentController@show');
 Route::get('/payment/complete','PaymentController@complete');
 Route::post('/payment/','PaymentController@create');
+
+
+Route::get('/profile','ProfileController@index');
+Route::put('/profile','ProfileController@update');

@@ -8,7 +8,12 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-
+use Auth;
+use App\Orphanage;
+use App\Profile;
+use App\Payment;
+use Str;
+use Storage;
 class RegisterController extends Controller
 {
     /*
@@ -29,7 +34,16 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected $redirectTo;
+
+    public function redirectTo(){
+        if(Auth::user()->type == 'orphanage'){
+            return $this->redirectTo = '/orphanage';
+        }
+        else if(Auth::user()->type=='user'){
+            return $this->redirectTo = '/';
+        }
+    }
 
     /**
      * Create a new controller instance.
@@ -41,6 +55,8 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,11 +65,26 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        if($data['type'] == 'orphanage'){
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'orphanage_name' => ['required', 'string', 'max:255'],
+                'payment_id' => 'required',
+                'account_number' => 'required',
+                'activity_media' => ['required','mimes:jpeg,png,jpg'],
+                'building_media' => ['required','mimes:jpeg,png,jpg'],
+                'structure_media' => ['required','mimes:pdf']
+            ]);
+        }
+        else if($data['type'] == 'user'){
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+            ]);
+        }
     }
 
     /**
@@ -64,10 +95,52 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        if($data['type'] == 'orphanage'){
+            $user =  User::create([
             'name' => $data['name'],
+            'type' => $data['type'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+            'password' => Hash::make($data['password'])]);
+            
+            $activity_media = Storage::disk('public')->put('activity_media', $data['activity_media']);
+            $structure_media = Storage::disk('public')->put('structure_media', $data['structure_media']);
+            $building_media = Storage::disk('public')->put('building_media', $data['building_media']);
+            Orphanage::create([
+                'name' => $data['orphanage_name'],
+                'payment_id' =>  $data['payment_id'],
+                'user_id' => $user->id,
+                'slug' => Str::slug($data['orphanage_name']),
+                'activity_media'=> $activity_media,
+                'structure_media'=>$structure_media,
+                'building_media' =>$building_media,
+                'account_number' => $data['account_number'],
+            ]);
+
+            return $user;
+        }
+        else{
+            $user =  User::create([
+            'name' => $data['name'],
+            'type' => $data['type'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password'])]);
+            return $user;
+        }
+
+    
+    }
+
+    public function options(){
+        return view('auth.register_options');
+    }
+
+
+    public function user(){
+        return view('auth.register');
+    }
+
+    public function orphanage(){
+        $payments = Payment::all();
+        return view('auth.register_orphanage',compact('payments'));
     }
 }

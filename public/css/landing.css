@@ -1,0 +1,26 @@
+.pray-illustration{
+    width : 90%;
+    height : 350px;
+    object-fit: cover;
+}
+
+
+.top-row{
+    background-image: url('/img/kids_image.png');
+    background-position: cover;
+    background-repeat: no-repeat;
+}
+
+
+
+@media screen and (min-width : 700px){
+    .top-quotes{
+        font-size : 28px;
+    }
+    .top-quotes-owner{
+        font-size : 24px;
+    }
+    .about-us-content{
+        font-size :20px;
+    }
+}

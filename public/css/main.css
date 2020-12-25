@@ -1,6 +1,10 @@
 body{
-    font-family : 'Nunito Sans', sans-serif;
+    font-family : 'Poppins', sans-serif;
 }
 .primary-bg-color{
     background-color : #112D4E;
+}
+
+.top-row{
+    min-height: 300px;
 }

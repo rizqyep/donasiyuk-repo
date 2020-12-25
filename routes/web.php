@@ -15,4 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/register/options','Auth\RegisterController@options');
+Route::get('/register/orphanage','Auth\RegisterController@orphanage');
+Route::get('/register/user','Auth\RegisterController@user');
+Route::get('/login/options','Auth\LoginController@options');
+Route::get('/login/options','Auth\LoginController@options');
+Route::get('/login/orphanage','Auth\LoginController@orphanage');
+Route::get('/login/user','Auth\LoginController@user');
+Route::get('/aboutus','HomeController@aboutus');
+
 Auth::routes();
+
+Route::get('/orphanage','Orphanage\HomeController@index');
+Route::put('/orphanage/{orphanage}','Orphanage\ProfileController@update');

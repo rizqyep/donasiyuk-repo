@@ -1,16 +1,16 @@
 @extends('layouts.app')
 
 @section('title')
-Login User/Donatur
+Login Panti Asuhan
 @endsection
 
 
 @section('content')
-<div class="container">
+<div class="container mb-5 mt-5">
     <div class="card">
         <div class="card-body">
             <h4 class="font-weight-bold mb-4">
-                Login sebagai User/Donatur
+                Login sebagai Panti Asuhan
             </h4>
             <form action="{{route('login')}}" method="POST">
                 @csrf

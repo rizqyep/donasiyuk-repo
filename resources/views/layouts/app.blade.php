@@ -14,12 +14,13 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
     <!-- Google Fonts -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700&display=swap">
     <!-- Bootstrap core CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
     <!-- Material Design Bootstrap -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('/css/main.css')}}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
     @stack('styles')
 </head>
 
@@ -39,7 +40,9 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/aboutus')}}">About Us</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -47,29 +50,52 @@
                         <!-- Authentication Links -->
                         @guest
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            <a class="nav-link" href="{{ url('/login/options')}}">{{ __('Login') }}</a>
                         </li>
                         @if (Route::has('register'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">{{ __('Daftar') }}</a>
+                            <a class="nav-link" href="{{url('/register/options')}}">{{ __('Daftar') }}</a>
                         </li>
                         @endif
                         @else
+
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                @if(Auth::user() && Auth::user()->type == 'orphanage')
+
+                                {{ Auth::user()->orphanage->name }}
+                                @else
                                 {{ Auth::user()->name }}
+                                @endif
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+
+
+
+                                @if(Auth::user() && Auth::user()->type == 'orphanage')
+
+                                <a class="dropdown-item" href="{{ url('/orphanage') }}">
+                                    <i class="fas fa-home mr-3"></i>Kelola Panti
                                 </a>
+                                @else
+                                <a class="dropdown-item" href="{{ url('profile') }}">
+                                    <i class="fas fa-user mr-3"></i>Profil Kamu
+                                </a>
+                                @endif
+
+                                <a class="dropdown-item text-danger" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    <i class="fas fa-power-off text-danger mr-3"></i> Logout
+                                </a>
+
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
                                 </form>
+
+
                             </div>
                         </li>
                         @endguest
@@ -78,10 +104,56 @@
             </div>
         </nav>
 
-        <main class="py-4">
-            @yield('content')
-        </main>
+
+        @yield('content')
+
+
+
     </div>
+
+    <footer class="page-footer font-small primary-bg-color">
+
+        <!-- Footer Links -->
+        <div class="container pt-3 text-center text-md-left mt-5">
+            <!-- Grid row -->
+            <div class="row mt-3">
+                <!-- Grid column -->
+                <div class="col-md-6 mx-auto mb-4">
+                    <h6 class="font-weight-bold">Our Vision</h6>
+                    <h4 class="mt-3">
+                        Bahagia itu sederhana<br>
+                        Bebaskan hati dan saling berbagi!
+                    </h4>
+                </div>
+                <!-- Grid column -->
+                <div class="col-md-6 mx-auto mb-md-0 mb-4">
+                    <!-- Links -->
+                    <h6 class="text-uppercase font-weight-bold">Kontak</h6>
+                    <hr class="white mb-4 mt-0 d-inline-block mx-auto" style="width: 60px;" />
+
+                    <div class="d-flex justify-content-start">
+                        <div>
+                            <i class="fas fa-home mr-3"></i>
+                        </div>
+                        <div>
+                            <p>Jl. Telekomunikasi Jl. Terusan Buah Batu, Sukapura, Kec.
+                                Dayeuhkolot, Kota Bandung, Jawa Barat 40257</p>
+                        </div>
+                    </div>
+
+                    <p>
+                        <i class="fas fa-envelope mr-3"></i>
+                        info@donasiyuk.id
+                    </p>
+                    <p><i class="fas fa-phone mr-3"></i>+628123123123123</p>
+
+                </div>
+                <!-- Grid column -->
+            </div>
+            <!-- Grid row -->
+        </div>
+        <!-- Footer Links -->
+    </footer>
     <!-- JQuery -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Bootstrap tooltips -->

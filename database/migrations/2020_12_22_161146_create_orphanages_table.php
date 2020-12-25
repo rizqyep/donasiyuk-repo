@@ -15,6 +15,16 @@ class CreateOrphanagesTable extends Migration
     {
         Schema::create('orphanages', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('payment_id');
+            $table->string('slug');
+            $table->string('name')->nullable();
+            $table->integer('kids')->nullable();
+            $table->text('needs')->nullable();
+            $table->text('structure_media')->nullable();
+            $table->text('activity_media')->nullable();
+            $table->text('building_media')->nullable();
+            $table->string('account_number')->nullable();
             $table->timestamps();
         });
     }

@@ -16,8 +16,9 @@ class HomeController extends Controller
         $this->middleware('orphanage');
     }
     public function index(){
-     
         $orphanage = Orphanage::find(Auth::user()->orphanage->id);
-        return view('orphanage.dashboard', compact('orphanage'));
+        $totalDonations = $orphanage->donations->sum('amount');
+        $totalUser = $orphanage->donations->groupBy('user_id')->count();
+        return view('orphanage.dashboard', compact('orphanage','totalDonations','totalUser'));
     }
 }

@@ -27,4 +27,17 @@ Route::get('/aboutus','HomeController@aboutus');
 Auth::routes();
 
 Route::get('/orphanage','Orphanage\HomeController@index');
+Route::post('/orphanage/gallery','Orphanage\ProfileController@gallery');
+Route::get('/orphanage/donations','Orphanage\DonationController@index');
 Route::put('/orphanage/{orphanage}','Orphanage\ProfileController@update');
+
+
+Route::get('/orphanages','Orphanage\DataController@index');
+Route::get('/orphanages/{slug}','Orphanage\DataController@show');
+
+
+Route::post('/transaction','Orphanage\TransactionController@create');
+
+Route::get('/payment/instruction/{payment_token}/{payment_slug}/{orphanage_slug}/{transaction}','PaymentController@show');
+Route::get('/payment/complete','PaymentController@complete');
+Route::post('/payment/','PaymentController@create');

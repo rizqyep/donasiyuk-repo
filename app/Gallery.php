@@ -4,13 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Transaction extends Model
+class Gallery extends Model
 {
-    public function user(){
-        return $this->belongsTo(User::class);
-    }
-
+    protected $guarded = [];
+    
     public function orphanage(){
         return $this->belongsTo(Orphanage::class);
+    }
+
+    public function photo(){
+        return '/storage/'.$this->media;
     }
 }

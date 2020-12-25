@@ -64,7 +64,16 @@ Home
                 Panti
                 Asuhan</a>
         </div>
+        @else
+        <h1 class="text-white font-weight-bold text-center mb-3">Selamat datang {{Auth::user()->orphanage->name}}</h1>
+        <h4 class="text-white text-center">Mari kelola data panti kamu!</h4>
+        <div class="d-flex justify-content-center">
+            <a class="btn primary-bg-color text-white font-weight-bold mt-3" href="{{url('/orphanage')}}">Kelola
+                Panti
+                Asuhan</a>
+        </div>
         @endif
+
         @endguest
 
     </div>

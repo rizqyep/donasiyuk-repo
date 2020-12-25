@@ -109,7 +109,7 @@ class RegisterController extends Controller
                 'name' => $data['orphanage_name'],
                 'payment_id' =>  $data['payment_id'],
                 'user_id' => $user->id,
-                'slug' => Str::slug($data['orphanage_name']),
+                'slug' => Str::slug($data['orphanage_name']).'-'.Str::random(20),
                 'activity_media'=> $activity_media,
                 'structure_media'=>$structure_media,
                 'building_media' =>$building_media,

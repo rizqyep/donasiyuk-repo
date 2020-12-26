@@ -14,14 +14,14 @@ Semua Panti
     <div class="row">
         @foreach($orphanages as $orphanage)
 
-        <div class="col-6 col-md-4">
+        <div class="col-6 col-md-4 mb-3">
             <a href="{{url('/orphanages/'.$orphanage->slug)}}">
                 <div class="card">
                     <div class="image-holder rounded">
                         <img src="{{asset($orphanage->photo())}}" alt="" class="card-image w-100 rounded-top">
                     </div>
                     <div class="card-body">
-                        <h5 class="font-weight-bold">{{$orphanage->name}}</h5>
+                        <h6 class="font-weight-bold">{{$orphanage->name}}</h6>
                         <p class="text-muted"><i class="fas fa-user mr-1 font-weight-bold"></i> <span
                                 class="font-weight-bold">{{$orphanage->kids}}</span>
                             anak

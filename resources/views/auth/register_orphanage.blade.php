@@ -113,7 +113,7 @@ Pilihan Daftar Akun
                     @enderror
                 </div>
 
-                <button class="btn primary-bg-color text-white font-weight-bold w-100 mx-0 shadow-none">Daftarkan Panti
+                <button class="btn btn-primary text-white font-weight-bold w-100 mx-0 shadow-none">Daftarkan Panti
                     Asuhan</button>
 
 

@@ -22,7 +22,7 @@ Login User/Donatur
                     <label for="password">Password</label>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-                <button class="btn primary-bg-color text-white w-100 mx-0">Login</button>
+                <button class="btn btn-primary text-white w-100 mx-0">Login</button>
             </form>
         </div>
     </div>

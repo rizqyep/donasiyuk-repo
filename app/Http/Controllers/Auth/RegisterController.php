@@ -65,6 +65,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        
         if($data['type'] == 'orphanage'){
             return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],

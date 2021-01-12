@@ -15,6 +15,7 @@ class PaymentController extends Controller
     public function __construct(){
         $this->middleware('auth');
     }
+    
     public function show($payment_token , $payment_slug, $orphanage_slug, Transaction $transaction){
         $payment = Payment::where('slug', $payment_slug)->first();
         $orphanage = $transaction->orphanage;
